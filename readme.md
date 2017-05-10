@@ -29,7 +29,8 @@ In the briefing provided there was an example of the project lacking the discoun
 #### delivery
 
 * _price_ - is now unchangable after initialisation of order
-* _discountedPrice_ - added and is what will be shown in the output of _order_
+* added _discountedPrice_ - added and is what will be shown in the output of _order_
+* added _type_ - what type of order a product is.
 
 ## critique on example
 

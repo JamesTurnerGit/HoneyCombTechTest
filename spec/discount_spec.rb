@@ -1,19 +1,46 @@
-require "Discount"
+require "discount"
 
 describe Discount do
-  context "global Discount" do
-    subject (:discountAmount) {25}
-    subject (:discount) {described_class.new ({amount: discountAmount})}
+    subject (:amount) {double("AmountProc", call: nil)}
+    subject (:amountParam) {"AmountParam"}
+    subject (:target) {double("TargetProc", call: true)}
+    subject (:targetParam) {"TargetParam"}
+    subject (:condition) {double("conditionProc", call: true)}
+    subject (:conditionParam) {"conditionParam"}
+    subject (:discriptor) {"string"}
+    subject (:params) {{amount: amount, amountParam: amountParam,
+                        target: target, targetParam: targetParam,
+                        condition: condition, conditionParam: conditionParam,
+                        string: discriptor}}
+    subject (:discount) {Discount.new params}
 
-    it "should know what it applies to" do
-      expect(discount.target).to eq global
+    subject (:delivery) {double("delivery")}
+    subject (:order)    {double("order")}
+
+    it "should call procs to check if discount applies" do
+      discount.tryApply delivery, order
+      expect(target).to    have_received(:call).with(delivery, targetParam)
+      expect(condition).to have_received(:call).with(order, conditionParam)
     end
 
-    xit "should know conditions about applying itself"
-
-    it "should have a % amount" do
-      expect(discount.amount).to eq discountAmount
+    it "should apply discount proc if procs return true" do
+      discount.tryApply delivery, order
+      expect(amount).to have_received(:call).with(delivery, amountParam)
     end
 
-  end
+    it "should not apply discount proc if target is incorrect" do
+      allow(target).to receive(:call).and_return (false)
+      discount.tryApply delivery, order
+      expect(amount).not_to have_received(:call).with(delivery, amountParam)
+    end
+
+    it "should not apply discount proc if conditions are not met" do
+      allow(condition).to receive(:call).and_return (false)
+      discount.tryApply delivery, order
+      expect(amount).not_to have_received(:call).with(delivery, amountParam)
+    end
+
+    it "should be able to return the discriptor string passed to it on creation" do
+      expect(discount.toString).to eq discriptor
+    end
 end
