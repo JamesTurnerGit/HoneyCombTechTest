@@ -13,13 +13,13 @@ class Discount
     self.string = string
   end
 
-  def tryApply delivery, order
+  def try_apply delivery, order
     matchesTarget = target.call(delivery, targetParam)
     matchesConditions = condition.call(order, conditionParam)
-    applyDiscount(delivery) if matchesTarget && matchesConditions
+    apply_discount(delivery) if matchesTarget && matchesConditions
   end
 
-  def toString
+  def to_string
     string
   end
 
@@ -30,7 +30,7 @@ class Discount
                 :condition, :conditionParam,
                 :string
 
-  def applyDiscount delivery
+  def apply_discount delivery
     amount.call(delivery, amountParam)
   end
 

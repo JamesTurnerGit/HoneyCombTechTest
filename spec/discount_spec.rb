@@ -18,29 +18,29 @@ describe Discount do
     subject (:order)    {double("order")}
 
     it "should call procs to check if discount applies" do
-      discount.tryApply delivery, order
+      discount.try_apply delivery, order
       expect(target).to    have_received(:call).with(delivery, targetParam)
       expect(condition).to have_received(:call).with(order, conditionParam)
     end
 
     it "should apply discount proc if procs return true" do
-      discount.tryApply delivery, order
+      discount.try_apply delivery, order
       expect(amount).to have_received(:call).with(delivery, amountParam)
     end
 
     it "should not apply discount proc if target is incorrect" do
       allow(target).to receive(:call).and_return (false)
-      discount.tryApply delivery, order
+      discount.try_apply delivery, order
       expect(amount).not_to have_received(:call).with(delivery, amountParam)
     end
 
     it "should not apply discount proc if conditions are not met" do
       allow(condition).to receive(:call).and_return (false)
-      discount.tryApply delivery, order
+      discount.try_apply delivery, order
       expect(amount).not_to have_received(:call).with(delivery, amountParam)
     end
 
     it "should be able to return the discriptor string passed to it on creation" do
-      expect(discount.toString).to eq discriptor
+      expect(discount.to_string).to eq discriptor
     end
 end
