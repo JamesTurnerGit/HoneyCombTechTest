@@ -1,4 +1,4 @@
-require "discountFactory"
+require "./models/discountFactory"
 describe DiscountFactory do
   subject(:discount){double("discount", new: nil)}
   subject(:amounts){double("amount", get: "amountClass")}

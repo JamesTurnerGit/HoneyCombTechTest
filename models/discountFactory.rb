@@ -1,7 +1,7 @@
-require "discount"
-require "discountTargets"
-require "discountAmounts"
-require "discountConditions"
+require_relative "discount"
+require_relative "discountTargets"
+require_relative "discountAmounts"
+require_relative "discountConditions"
 
 class DiscountFactory
   def initialize params

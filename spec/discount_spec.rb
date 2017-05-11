@@ -1,4 +1,4 @@
-require "discount"
+require "./models/discount"
 
 describe Discount do
   subject (:amount) {double("AmountProc", apply: nil)}

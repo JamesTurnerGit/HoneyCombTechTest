@@ -1,4 +1,4 @@
-require "discountAmounts"
+require "./models/discountAmounts"
 describe DiscountAmounts do
   subject (:delivery){double("delivery",price: 100, :discountedPrice= =>nil)}
   describe "#get" do

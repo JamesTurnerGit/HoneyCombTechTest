@@ -1,4 +1,4 @@
-require "discountConditions"
+require "./models/discountConditions"
 
 describe DiscountConditions do
   subject (:order){double("Order")}

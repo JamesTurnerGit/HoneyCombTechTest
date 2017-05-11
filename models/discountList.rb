@@ -1,6 +1,6 @@
-require "discountFactory"
+require_relative "discountFactory"
 class DiscountList
-  attr_reader :discounts
+  attr_accessor :discounts
   def initialize (factoryClass = DiscountFactory)
     @discountFactory = factoryClass.new
     @discounts = []
@@ -11,6 +11,5 @@ class DiscountList
   end
 
   private
-  attr_writer :discounts
   attr_reader :discountFactory
 end

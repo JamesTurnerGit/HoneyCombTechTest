@@ -1,4 +1,4 @@
-require "discountTargets"
+require "./models/discountTargets"
 describe DiscountTargets do
   subject (:delivery){double("delivery")}
 

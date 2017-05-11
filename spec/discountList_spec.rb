@@ -1,4 +1,4 @@
-require "discountList"
+require "./models/discountList"
 describe DiscountList do
 
   subject(:discount){double ("discount")}
@@ -13,7 +13,7 @@ describe DiscountList do
       expect(discountFactory).to have_received(:make).with(discountParams)
     end
   end
-  
+
   describe "#discounts" do
     it "should return a list of it's current discounts" do
       expect(discountList.discounts.count).to eq 0
