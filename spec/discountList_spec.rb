@@ -14,11 +14,11 @@ describe DiscountList do
     end
   end
 
-  describe "#discounts" do
+  describe "#items" do
     it "should return a list of it's current discounts" do
-      expect(discountList.discounts.count).to eq 0
+      expect(discountList.items.count).to eq 0
       discountList.add(discountParams)
-      expect(discountList.discounts.count).to eq 1
+      expect(discountList.items.count).to eq 1
     end
   end
 end

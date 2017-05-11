@@ -1,8 +1,8 @@
 module DiscountConditions
 
-  def getCondition condition, params = nil
+  def get condition, params = nil
       case condition
-      when :none
+      when :none, nil
         return None.new params
       when :priceTotal
         return PriceTotal.new params
@@ -13,7 +13,7 @@ module DiscountConditions
       end
   end
 
-  module_function :getCondition
+  module_function :get
 
   class Condition
     def initialize params
@@ -23,7 +23,7 @@ module DiscountConditions
       true
     end
     def to_string
-      " with no condition"
+      "with no condition"
     end
 
     private
@@ -36,22 +36,22 @@ module DiscountConditions
 
   class PriceTotal < Condition
     def check order
-      order.total_cost >=  params[:price]
+      order.total_cost >=  params[:amount]
     end
 
     def to_string
-      " if the total price is over #{params[:price]}"
+      "if the total price is over #{params[:amount]}"
     end
   end
 
   class TypeTotal < Condition
     def check order
-      count = order.itemsOfType(params[:type]).count
+      count = order.items_of_type(params[:type]).count
       count >= params[:amount]
     end
 
     def to_string
-      " if there is at least #{params[:amount]} #{params[:type]} deliveries in the order"
+      "if there is at least #{params[:amount]} #{params[:type]} deliveries in the order"
     end
   end
 end

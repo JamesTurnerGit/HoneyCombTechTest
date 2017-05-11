@@ -14,25 +14,25 @@ describe Discount do
 
   describe "#try_apply" do
     it "should call subclasses to check if discount applies" do
-      discount.try_apply delivery, order
+      discount.try_apply order, delivery
       expect(target).to    have_received(:check).with(delivery)
       expect(condition).to have_received(:check).with(order)
     end
 
     it "should apply discount if subclasses return true" do
-      discount.try_apply delivery, order
+      discount.try_apply order, delivery
       expect(amount).to have_received(:apply).with(delivery)
     end
 
     it "should not apply discount if target is incorrect" do
        allow(target).to receive(:check).and_return (false)
-       discount.try_apply delivery, order
+       discount.try_apply order, delivery
        expect(amount).not_to have_received(:apply).with(delivery)
     end
 
     it "should not apply discount if conditions are not met" do
       allow(condition).to receive(:check).and_return (false)
-      discount.try_apply delivery, order
+      discount.try_apply order, delivery
       expect(amount).not_to have_received(:apply).with(delivery)
     end
   end
@@ -42,7 +42,7 @@ describe Discount do
       allow(amount).to receive(:to_string).and_return ("1")
       allow(target).to receive(:to_string).and_return ("2")
       allow(condition).to receive(:to_string).and_return ("3")
-      expectedString = "123."
+      expectedString = "1 2 3."
       expect(discount.to_string).to eq expectedString
     end
   end

@@ -4,8 +4,8 @@ require_relative "discountAmounts"
 require_relative "discountConditions"
 
 class DiscountFactory
-  def initialize params
-    params.merge(defaults)
+  def initialize params = {}
+    params = defaults.merge(params)
     @discount = params[:discount]
     @amounts = params[:amounts]
     @targets = params[:targets]

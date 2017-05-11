@@ -7,6 +7,8 @@ https://github.com/honeycomb-tv-recruitment/makers-test
 
 In the briefing provided there was an example of the project lacking the discount implementation. While not strictly part of the briefing I've decided to take this as "legacy" code since in a more real world example there would be prexisting code for handling orders to integrate any solution into.
 
+Flexibility and expandability are what i've foccused on
+
 I decided to make a discount out of various subclasses as each behaviour potentially needs different params. I spiked a version with Procs as they can ignore what they don't need, but decided they weren't flexible enough to add a nice to_string method or any other future extensions needed.
 
 When changing the delivery class there's a problem, Having the price fully mutable creates an issue where you might apply the same discount twice. Making the a new var to contain the discounted price means code elswhere needs to point to that instead or errors occur. Making the new var the one that is static seems to be the safest option. Ideally prices would not be stored in the item itself and instead be stored in a pricelist object.

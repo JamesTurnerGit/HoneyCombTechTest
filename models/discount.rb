@@ -5,14 +5,14 @@ class Discount
     @condition = condition
   end
 
-  def try_apply delivery, order
+  def try_apply order, delivery
     return if !targetter.check(delivery)
     return if !condition.check(order)
     discounter.apply(delivery)
   end
 
   def to_string
-    discounter.to_string + targetter.to_string + condition.to_string + "."
+    "#{discounter.to_string} #{targetter.to_string} #{condition.to_string}."
   end
 
   private

@@ -8,7 +8,7 @@ describe Order do
   let(:material) { Material.new 'HON/TEST001/010' }
   let(:standard_delivery) { Delivery.new(:standard, 10) }
   let(:express_delivery) { Delivery.new(:express, 20) }
-  let(:discountList) {double("discountList",add: nil)}
+  let(:discountList) {double("discountList",add: nil,items: [],apply_discounts: nil)}
 
   context 'empty' do
     it 'costs nothing' do
@@ -58,6 +58,13 @@ describe Order do
 
       result = subject.items_of_type(:express).count
       expect(result).to eq 1
+    end
+  end
+
+  describe '#apply_discounts' do
+    it 'calls the list to try applying itself(lazy bum)' do
+      subject.apply_discounts
+      expect(discountList).to have_received(:apply_discounts).with subject
     end
   end
 end

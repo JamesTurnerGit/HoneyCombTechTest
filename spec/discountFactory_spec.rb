@@ -1,7 +1,7 @@
 require "./models/discountFactory"
 describe DiscountFactory do
   subject(:discount){double("discount", new: nil)}
-  subject(:amounts){double("amount", get: "amountClass")}
+  subject(:amounts){double("amounts", get: "amountClass")}
   subject(:targets){double("targets", get: "targetClass")}
   subject(:conditions){double("conditions", get: "conditionClass")}
 

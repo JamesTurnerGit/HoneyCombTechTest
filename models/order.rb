@@ -1,8 +1,11 @@
+require_relative "discountList"
+
 class Order
   COLUMNS = {
     broadcaster: 20,
     delivery: 8,
-    price: 8
+    price: 8,
+    discounted_price: 20
   }.freeze
 
   attr_accessor :material, :items, :discountList
@@ -21,17 +24,27 @@ class Order
     discountList.add params
   end
 
+  def apply_discounts
+    discountList.apply_discounts self
+  end
+
   def total_cost
     items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
   end
 
   def discounted_total_cost
+    apply_discounts
     items.inject(0) { |memo, (_, delivery)| memo += delivery.discountedPrice }
   end
 
   def output
+    apply_discounts
     [].tap do |result|
       result << "Order for #{material.identifier}:"
+
+      discountList.items.each do |discount|
+        result << discount.to_string
+      end
 
       result << COLUMNS.map { |name, width| name.to_s.ljust(width) }.join(' | ')
       result << output_separator
@@ -40,12 +53,14 @@ class Order
         result << [
           broadcaster.name.ljust(COLUMNS[:broadcaster]),
           delivery.name.to_s.ljust(COLUMNS[:delivery]),
-          ("$#{delivery.price}").ljust(COLUMNS[:price])
+          ("$#{delivery.price}").ljust(COLUMNS[:price]),
+          ("$#{delivery.discountedPrice}").ljust(COLUMNS[:discounted_price])
         ].join(' | ')
       end
 
       result << output_separator
       result << "Total: $#{total_cost}"
+      result << "Total after discounts: $#{discounted_total_cost}"
     end.join("\n")
   end
 

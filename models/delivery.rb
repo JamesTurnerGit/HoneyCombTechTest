@@ -7,4 +7,8 @@ class Delivery
     @price = price
     self.discountedPrice = price
   end
+
+  def reset_price
+    discountedPrice = price
+  end
 end
