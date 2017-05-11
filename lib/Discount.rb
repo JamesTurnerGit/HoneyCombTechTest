@@ -13,7 +13,7 @@ class Discount
   end
 
   def to_string
-    ""
+    discounter.to_string + targetter.to_string + condition.to_string + "."
   end
 
   private

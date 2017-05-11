@@ -4,10 +4,10 @@ module DiscountConditions
       case condition
       when :none
         return None.new params
-      when :orderPriceTotal
-        return OrderPriceTotal.new params
-      when :orderTypeTotal
-        return OrderTypeTotal.new params
+      when :priceTotal
+        return PriceTotal.new params
+      when :typeTotal
+        return TypeTotal.new params
       else
         raise "condition not found"
       end
@@ -34,20 +34,22 @@ module DiscountConditions
   class None < Condition
   end
 
-  class OrderPriceTotal < Condition
+  class PriceTotal < Condition
     def check order
       order.total_cost >=  params[:price]
     end
+
     def to_string
       " if the total price is over #{params[:price]}"
     end
   end
 
-  class OrderTypeTotal < Condition
+  class TypeTotal < Condition
     def check order
-      count = order.items.select{|item| item[1].type == params[:type]}.count
+      count = order.itemsOfType(params[:type]).count
       count >= params[:amount]
     end
+
     def to_string
       " if there is at least #{params[:amount]} #{params[:type]} deliveries in the order"
     end

@@ -1,8 +1,4 @@
 module DiscountAmounts
-  attr_reader :discounters
-
-  #@discounters = {percentOff: PercentOff}
-
   def get discounter, params = nil
     case discounter
     when :percentOff

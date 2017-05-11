@@ -10,8 +10,8 @@ describe DiscountConditions do
     expect(condition.to_string).to eq expectedString
   end
 
-  it "should check order total if told :orderPriceTotal" do
-    condition = DiscountConditions.getCondition(:orderPriceTotal, {price: 50})
+  it "should check order total if told :priceTotal" do
+    condition = DiscountConditions.getCondition(:priceTotal, {price: 50})
     allow(order).to receive(:total_cost).and_return (50)
     expect(condition.check(order)).to eq true
 
@@ -22,21 +22,18 @@ describe DiscountConditions do
     expect(condition.to_string).to eq expectedString
   end
 
-  it "should check number of a type of item if told :orderTypeTotal" do
-    condition = DiscountConditions.getCondition(:orderTypeTotal, {:type => :express,amount: 2})
-    item_1 = double("express",:type => :express)
-    item_2 = double("normal",:type => :normal)
-    item_3 = double("express",:type => :express)
-    broadcaster = double("broadcaster")
-    items = [[broadcaster,item_1],[broadcaster,item_2]]
+  it "should check number of a type of item if told :typeTotal" do
+    condition = DiscountConditions.getCondition(:typeTotal, {:type => :express,amount: 3})
 
-    allow(order).to receive(:items).and_return (items)
+    items = [1,2]
+
+    allow(order).to receive(:itemsOfType).and_return (items)
     expect(condition.check(order)).to eq false
 
-    items << [broadcaster,item_3]
+    items << 3
     expect(condition.check(order)).to eq true
 
-    expectedString = " if there is at least 2 express deliveries in the order"
+    expectedString = " if there is at least 3 express deliveries in the order"
     expect(condition.to_string).to eq expectedString
   end
 
