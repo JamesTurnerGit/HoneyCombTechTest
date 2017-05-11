@@ -49,6 +49,7 @@ When changing the delivery class there's a problem, Having the price fully mutab
 
   In the same classes I'm not happy with the case statement to return the subclasses within them. I feel there's probably a better way to do that.
 
+  would like to solidify how multible discounts work, atm its just the last item on the discount list that overwrites any others on a particular item.
 #### usage
 
 ### adding a discount to an order

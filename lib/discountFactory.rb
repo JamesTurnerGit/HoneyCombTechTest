@@ -14,9 +14,9 @@ class DiscountFactory
 
   def make params
     discounter = amounts.get(params[:amount], params[:amountParam])
-    targetter  = target.get(params[:target], params[:targetParam])
-    condition  = condition.get(params[:condition], params[:conditionParam])
-    #discount.new (discounter: discounter, targetter: targetter, condition: condition)
+    targetter  = targets.get(params[:target], params[:targetParam])
+    condition  = conditions.get(params[:condition], params[:conditionParam])
+    discount.new ({discounter: discounter, targetter: targetter, condition: condition})
   end
 
   private
