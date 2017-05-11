@@ -65,3 +65,6 @@ When changing the delivery class there's a problem, Having the price fully mutab
 |                        |                         | :priceTotal            |
 
 ### making an addition to the system
+#### thoughts
+### What i like about my solution
+### What i don't like about my solution

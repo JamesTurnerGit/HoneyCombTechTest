@@ -1,4 +1,3 @@
-
 class Discount
   def initialize (discounter:, targetter:, condition:)
     @discounter = discounter
