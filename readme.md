@@ -35,14 +35,13 @@ When changing the delivery class there's a problem, Having the price fully mutab
 * new method _add_discount_ - adds a discount to the _discount_list_
 * new method _apply_discount_ - this goes through each "delivery" to calculate _discounted_price_ and also the final _discounted_total_.
 * new method _discounted_total_ - returns new total cost of order after discounts
-* new method _itemsOfType_ - this returns all items of a type from the order
-* changed method _output_ - now uses _discounted_total_ and _discounted_price_.
+* new method _items_of_type_ - this returns all items of a type from the order
+* changed method _output_ - now uses _discounted_cost_ and _discounted_cost_.
 
 #### delivery
 
 * changed var _price_ - is now unchangable after initialisation of order
-* added _dicountedPrice_ - added and is what will be shown in the output of _order_
-* added _type_ - what type of order a product is.
+* added _discountedPrice_ - added and is what will be shown in the output of _order_
 
 #### improvements to make
   _discountAmounts_, _discountTargets_ and _discountConditions_ are all very similar, i'm sure there's a ducktype hiding in them.

@@ -1,8 +1,10 @@
 class Delivery
-  attr_accessor :name, :price
+  attr_accessor :name, :discountedPrice
+  attr_reader :price
 
   def initialize(name, price)
     self.name = name
-    self.price = price
+    @price = price
+    self.discountedPrice = price
   end
 end

@@ -5,19 +5,28 @@ class Order
     price: 8
   }.freeze
 
-  attr_accessor :material, :items
+  attr_accessor :material, :items, :discountList
 
-  def initialize(material)
+  def initialize(material,discountList = DiscountList.new)
     self.material = material
     self.items = []
+    self.discountList = discountList
   end
 
   def add(broadcaster, delivery)
     items << [broadcaster, delivery]
   end
 
+  def add_discount params
+    discountList.add params
+  end
+
   def total_cost
     items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
+  end
+
+  def discounted_total_cost
+    items.inject(0) { |memo, (_, delivery)| memo += delivery.discountedPrice }
   end
 
   def output
@@ -40,6 +49,9 @@ class Order
     end.join("\n")
   end
 
+  def items_of_type type
+    items.select{|item| item[1].name == type}
+  end
   private
 
   def output_separator
