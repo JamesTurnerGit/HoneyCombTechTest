@@ -29,7 +29,7 @@ describe DiscountConditions do
     item_3 = double("express",:type => :express)
     broadcaster = double("broadcaster")
     items = [[broadcaster,item_1],[broadcaster,item_2]]
-    
+
     allow(order).to receive(:items).and_return (items)
     expect(condition.check(order)).to eq false
 
@@ -41,6 +41,6 @@ describe DiscountConditions do
   end
 
   it "should raise if it doesn't understand the condition type" do
-    expect{DiscountConditions.itself.getCondition(:fake).to raise_error}
+    expect{DiscountConditions.itself.getCondition(:fake)}.to raise_error "condition not found"
   end
 end

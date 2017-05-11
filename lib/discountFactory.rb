@@ -1,39 +1,30 @@
 require "discount"
-
+require "discountTargets"
+require "discountAmounts"
+require "discountConditions"
 
 class DiscountFactory
-  include DiscountConditions
-  # targetAllItems = Proc.new {
-  #   true}
-  #
-  # targetType = Proc.new {|delivery,target|
-  #   delivery.type == target}
-  #
-  #
+  def initialize params
+    params.merge(defaults)
+    @discount = params[:discount]
+    @amounts = params[:amounts]
+    @targets = params[:targets]
+    @conditions = params [:conditions]
+  end
 
-  #
-  #
-  # def makeDiscount(amount:, target:, condition:,conditionParam: "")
-  #   params = {amount: amount, target: target, conditionParam: conditionParam}
-  #   params [:targetter] = getTargeter target
-  #
-  #   case condition
-  #   when "orderTotal"
-  #       chosenCondition = conditionOrderTotal
-  #     else
-  #       chosenCondition = conditionNone
-  #   end
-  #   params [:condition] = chosenTargetter
-  #
-  #   Discount.new params
-  # end
-  #
-  # private
-  # def getTargeter
-  #   case target
-  #   when :all
-  #     return targetAllItems
-  #   else
-  #     return targetType
-  #   end
+  def make params
+    discounter = amounts.get(params[:amount], params[:amountParam])
+    targetter  = target.get(params[:target], params[:targetParam])
+    condition  = condition.get(params[:condition], params[:conditionParam])
+    #discount.new (discounter: discounter, targetter: targetter, condition: condition)
+  end
+
+  private
+  def defaults
+    {discount: Discount,
+     amounts: DiscountAmounts,
+     targets: DiscountTargets,
+     conditions: DiscountConditions}
+  end
+  attr_reader :discount, :amounts, :targets, :conditions
 end
