@@ -69,24 +69,24 @@ an example of how to build a discount
 site_discounts.add ({:amount =>    :changePrice,amountParam:   {amount: 5},
                      :condition => :priceTotal ,conditionParam:{amount: 50}})
  ```
-this sets standard delivery costs to cost 5 as long as the order costs over 50.
+this sets all delivery costs to cost 5 as long as the order costs over 50.
 
 ### params for subclasses
-* percentOff  - _amount_ - how much % to remove from the cost of the item
-* changePrice - _amount_ - what to change the price into
-* onAll - no params
-* byType - _type_ - what type of items to trigger on
-* none - no params
-* typeTotal - _type_ - what type of items to count - _amount_ -how many items before condition is met.
+* `percentOff` - _amount_ - how much % to remove from the cost of the item
+* `changePrice` - _amount_ - what to change the price into
+* `onAll` - no params
+* `byType` - _type_ - what type of items to trigger on
+* `none` - no params
+* `typeTotal` - _type_ - what type of items to count - _amount_ -how many items before condition is met.
 
 ### making an addition to the system
 decide what kind of new aspect you want to add and go to the appropriate file _discountAmounts_, _discountConditions_,_discountTargets_. extend the base class there and add the behaviour, then add your new class to the hash at the bottom of the file.
 
 ## thoughts
 ### What i like about my solution
-It's super flexable, could very easily extend to add all kinds of other options to any of the aspects.
+It's super flexable, could very easily extend to add all kinds of other options to any of the aspects. eg adding a discount on a particular broadcaster.
 ### What i don't like about my solution
-Building a discount means describing it in a lot of detail, Not obvious enough if something goes wrong
+Building a discount means describing it in a lot of detail, Not obvious enough if something goes wrong in creation untill you try to use the result, but that can be improved on.
 ### improvements to make
 I'd like to go over when my subclasses are created to give them better errors and make them check if they are initialized incorrectly.
 
