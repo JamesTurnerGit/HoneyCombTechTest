@@ -1,11 +1,11 @@
 require "./models/discountList"
 describe DiscountList do
 
-  subject(:discount){double ("discount")}
-  subject(:discountFactory){double("discountFactory",make:discount)}
-  subject(:discountFactoryClass){double("discountFactoryClass", new: discountFactory)}
+  let(:discount){double ("discount")}
+  let(:discountFactory){double("discountFactory",make:discount)}
+  let(:discountFactoryClass){double("discountFactoryClass", new: discountFactory)}
   subject(:discountList){DiscountList.new (discountFactoryClass)}
-  subject(:discountParams){{}}
+  let(:discountParams){{}}
 
   describe "#add" do
     it "should pass the params onto factory" do

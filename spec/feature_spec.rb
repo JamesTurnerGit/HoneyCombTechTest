@@ -34,7 +34,6 @@ describe "Examples" do
     order.add broadcaster_7, express_delivery
 
     expect(order.discounted_total_cost).to eq 45.0
-
   end
   it "calculates example2 as expected" do
     material = Material.new('ZDW/EOWW005/010')

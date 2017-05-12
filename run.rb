@@ -26,7 +26,6 @@ site_discounts.add ({:amount => :percentOff,amountParam: {amount: 25}})
 
 # New code ends here
 
-
 order = Order.new(material,site_discounts)
 
 order.add broadcaster_1, standard_delivery

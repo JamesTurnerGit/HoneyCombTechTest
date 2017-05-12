@@ -7,9 +7,9 @@ https://github.com/honeycomb-tv-recruitment/makers-test
 
 In the briefing provided there was an example of the project lacking the discount implementation. While not strictly part of the briefing I've decided to take this as "legacy" code since in a more real world example there would be prexisting code for handling orders to integrate any solution into.
 
-Flexibility and expandability are what i've foccused on
+besides intergrating into the old code, flexibility and expandability are what i've been foccused on. I'm very happy with how extendable this system is.
 
-I decided to make a discount out of various subclasses as each behaviour potentially needs different params. I spiked a version with Procs as they can ignore what they don't need, but decided they weren't flexible enough to add a nice to_string method or any other future extensions needed.
+I decided to make a discount out of various subclasses as each behaviour potentially needs different params. I spiked a version with Procs as they can ignore what they don't need, but decided they weren't flexible enough to add a nice to_s method or any other future extensions needed.
 
 When changing the delivery class there's a problem, Having the price fully mutable creates an issue where you might apply the same discount twice. Making the a new var to contain the discounted price means code elswhere needs to point to that instead or errors occur. Making the new var the one that is static seems to be the safest option. Ideally prices would not be stored in the item itself and instead be stored in a pricelist object.
 ## Concepts
@@ -45,14 +45,8 @@ When changing the delivery class there's a problem, Having the price fully mutab
 * changed var _price_ - is now unchangable after initialisation of order
 * added _discountedPrice_ - added and is what will be shown in the output of _order_
 
-#### improvements to make
-  _discountAmounts_, _discountTargets_ and _discountConditions_ are all very similar, i'm sure there's a ducktype hiding in them.
-
-  In the same classes I'm not happy with the case statement to return the subclasses within them. I feel there's probably a better way to do that.
-
-  would like to solidify how multible discounts work, atm its just the last item on the discount list that overwrites any others on a particular item.
 #### usage
-
+the described example scenarios have been set out in feature_spec.rb, additionally a discount was added to run.rb
 ### adding a discount to an order
   * create a order in the same way as before
   * to apply discounts to an order you have some options
@@ -66,6 +60,13 @@ When changing the delivery class there's a problem, Having the price fully mutab
 |                        |                         | :priceTotal            |
 
 ### making an addition to the system
+decide what kind of new aspect you want to add and go to the appropriate file _discountAmounts_, _discountConditions_,_discountTargets_
+
 #### thoughts
 ### What i like about my solution
+It's super flexable, could very easily extend to add all kinds of other options to any of the aspects
 ### What i don't like about my solution
+Building a discount means describing it in a lot of detail
+### improvements to make
+_discountAmounts_, _discountTargets_ and _discountConditions_ are all very similar, i'm sure there's a ducktype hiding in them.
+I'd like to go over when my subclasses are created to give them better errors and make them check if they are initialized incorrectly.

@@ -1,16 +1,8 @@
 module DiscountConditions
-
   def get condition, params = nil
-      case condition
-      when :none, nil
-        return None.new params
-      when :priceTotal
-        return PriceTotal.new params
-      when :typeTotal
-        return TypeTotal.new params
-      else
-        raise "condition not found"
-      end
+    condition ||= :none
+    raise "condition matcher not found" if CONDITIONS[condition] == nil
+    CONDITIONS[condition].new params
   end
 
   module_function :get
@@ -22,8 +14,8 @@ module DiscountConditions
     def check order
       true
     end
-    def to_string
-      "with no condition"
+    def to_s
+      ""
     end
 
     private
@@ -39,7 +31,7 @@ module DiscountConditions
       order.total_cost >=  params[:amount]
     end
 
-    def to_string
+    def to_s
       "if the total price is over #{params[:amount]}"
     end
   end
@@ -50,8 +42,10 @@ module DiscountConditions
       count >= params[:amount]
     end
 
-    def to_string
+    def to_s
       "if there is at least #{params[:amount]} #{params[:type]} deliveries in the order"
     end
   end
+
+  CONDITIONS = {:none => None, :priceTotal => PriceTotal, :typeTotal => TypeTotal}.freeze
 end

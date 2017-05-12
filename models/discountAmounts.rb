@@ -1,13 +1,7 @@
 module DiscountAmounts
   def get discounter, params = nil
-    case discounter
-    when :percentOff
-      return PercentOff.new params
-    when :changePrice
-      return ChangePrice.new params
-    else
-      raise "Discounter not found"
-    end
+    raise "discount method not found" if AMOUNTS[discounter] == nil
+    AMOUNTS[discounter].new params
   end
 
   module_function :get
@@ -17,7 +11,7 @@ module DiscountAmounts
       @params = params
     end
 
-    def to_string
+    def to_s
       ""
     end
     private
@@ -34,7 +28,7 @@ module DiscountAmounts
       delivery.discountedPrice = discountedPrice
       true
     end
-    def to_string
+    def to_s
       "#{params[:amount]}% off"
     end
   end
@@ -45,8 +39,10 @@ module DiscountAmounts
       delivery.discountedPrice = params[:amount]
       true
     end
-    def to_string
+    def to_s
       "price changed to #{params[:amount]}"
     end
   end
+  
+  AMOUNTS = {:percentOff => PercentOff, :changePrice => ChangePrice}.freeze
 end

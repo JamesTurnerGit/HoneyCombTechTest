@@ -1,17 +1,17 @@
 require "./models/discountFactory"
 describe DiscountFactory do
-  subject(:discount){double("discount", new: nil)}
-  subject(:amounts){double("amounts", get: "amountClass")}
-  subject(:targets){double("targets", get: "targetClass")}
-  subject(:conditions){double("conditions", get: "conditionClass")}
+  let(:discount){double("discount", new: nil)}
+  let(:amounts){double("amounts", get: "amountClass")}
+  let(:targets){double("targets", get: "targetClass")}
+  let(:conditions){double("conditions", get: "conditionClass")}
 
   subject(:discountFactory){described_class.new({discount: discount,
                                                  amounts: amounts,
                                                  targets: targets,
                                                  conditions: conditions})}
-  subject(:discountParams){{amount: "amount", amountParam: "amountParam",
-                            target: "target", targetParam: "targetParam",
-                            condition: "condition", conditionParam: "conditionParam"}}
+  let(:discountParams){{amount: "amount", amountParam: "amountParam",
+                        target: "target", targetParam: "targetParam",
+                        condition: "condition", conditionParam: "conditionParam"}}
   describe "#make" do
     it "searches the right modules for the right parts" do
       discountFactory.make discountParams

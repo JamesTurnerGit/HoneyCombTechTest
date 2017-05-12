@@ -1,16 +1,16 @@
 require "./models/discount"
 
 describe Discount do
-  subject (:amount) {double("AmountProc", apply: nil)}
-  subject (:target) {double("TargetProc", check: true)}
-  subject (:condition) {double("conditionProc", check: true)}
+  let(:amount) {double("AmountProc", apply: nil)}
+  let(:target) {double("TargetProc", check: true)}
+  let(:condition) {double("conditionProc", check: true)}
 
-  subject (:params) {{discounter: amount, targetter: target, condition: condition}}
+  let(:params) {{discounter: amount, targetter: target, condition: condition}}
 
-  subject (:discount) {Discount.new params}
+  subject(:discount) {Discount.new params}
 
-  subject (:delivery) {double("delivery")}
-  subject (:order)    {double("order")}
+  let(:delivery) {double("delivery")}
+  let(:order)    {double("order")}
 
   describe "#try_apply" do
     it "should call subclasses to check if discount applies" do
@@ -37,13 +37,13 @@ describe Discount do
     end
   end
 
-  describe "#to_string" do
-    it "combines the to_strings of all the subclasses" do
-      allow(amount).to receive(:to_string).and_return ("1")
-      allow(target).to receive(:to_string).and_return ("2")
-      allow(condition).to receive(:to_string).and_return ("3")
+  describe "#to_s" do
+    it "combines the to_ss of all the subclasses" do
+      allow(amount).to receive(:to_s).and_return ("1")
+      allow(target).to receive(:to_s).and_return ("2")
+      allow(condition).to receive(:to_s).and_return ("3")
       expectedString = "1 2 3."
-      expect(discount.to_string).to eq expectedString
+      expect(discount.to_s).to eq expectedString
     end
   end
 end

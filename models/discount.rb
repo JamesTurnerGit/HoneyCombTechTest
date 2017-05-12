@@ -11,8 +11,8 @@ class Discount
     discounter.apply(delivery)
   end
 
-  def to_string
-    "#{discounter.to_string} #{targetter.to_string} #{condition.to_string}."
+  def to_s
+    "#{discounter.to_s} #{targetter.to_s} #{condition.to_s}."
   end
 
   private

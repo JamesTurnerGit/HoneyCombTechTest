@@ -1,13 +1,8 @@
 module DiscountTargets
   def get targetter, params = nil
-    case targetter
-    when :all,nil
-      return All.new params
-    when :type
-      return Type.new params
-    else
-      raise "Targetter not found"
-    end
+    targetter ||= :all
+    raise "target matcher not found" if TARGETTERS[targetter] == nil
+    TARGETTERS[targetter].new params
   end
 
   module_function :get
@@ -21,7 +16,7 @@ module DiscountTargets
       true
     end
 
-    def to_string
+    def to_s
       "on all items"
     end
 
@@ -38,8 +33,9 @@ module DiscountTargets
       delivery = item[1]
       delivery.name == params[:type]
     end
-    def to_string
+    def to_s
       "on #{params[:type]} deliveries"
     end
   end
+  TARGETTERS = {:all => All,:type => Type}.freeze
 end

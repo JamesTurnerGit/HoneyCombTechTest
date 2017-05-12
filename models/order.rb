@@ -43,7 +43,7 @@ class Order
       result << "Order for #{material.identifier}:"
 
       discountList.items.each do |discount|
-        result << discount.to_string
+        result << discount.to_s
       end
 
       result << COLUMNS.map { |name, width| name.to_s.ljust(width) }.join(' | ')
