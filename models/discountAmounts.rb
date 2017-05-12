@@ -43,6 +43,6 @@ module DiscountAmounts
       "price changed to #{params[:amount]}"
     end
   end
-  
+
   AMOUNTS = {:percentOff => PercentOff, :changePrice => ChangePrice}.freeze
 end
