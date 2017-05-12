@@ -23,40 +23,41 @@ while it was possible to just reuse the % off application for both examples requ
   * if it has any conditions before it's active
 * Alters as little of the existing classes as possible while maintaining something neat and sensible.
 
-### New Classes
+## New Classes
 
-* _discount_ - Has all info needed for a single discount.
-* _discountList_ - Contains all discounts to apply to an order.
-* _discountFactory_ - brings together the next three classes and constructs discounts. I'm not sure on the nescessity of this but the generation of a discount is complex enough to warrent seperating the concern out of the discount class itself.
-* _discountAmounts_ - contains all the various subclasses for amounts and selects the right one, another class that could be merged into discountFactory but is kept seperate to make the code communicate better. The reason these classes are stored in another class are to try and not polute the global namespace too much.
-* _discountTargets_ - contains all the various subclasses for targets.
-* _discountConditions_ - contains all the various subclasses for conditions.
+* `discount` - Has all info needed for a single discount.
+* `discountList` - Contains all discounts to apply to an order.
+* `discountFactory` - brings together the next three classes and constructs discounts. I'm not sure on the nescessity of this but the generation of a discount is complex enough to warrent seperating the concern out of the discount class itself.
+* `discountAmounts` - contains all the various subclasses for amounts and selects the right one, another class that could be merged into discountFactory but is kept seperate to make the code communicate better. The reason these classes are stored in another class are to try and not polute the global namespace too much.
+* `discountTargets` - contains all the various subclasses for targets.
+* `discountConditions` - contains all the various subclasses for conditions.
 
-### Changes to existing Classes
+## Changes to existing Classes
 
-#### Order
+### Order
 
-* new var _discountList_ - stores a  _discountList_
-* new method _add_discount_ - adds a discount to the _discount_list_
-* new method _apply_discount_ - this goes through each "delivery" to calculate _discounted_price_ and also the final _discounted_total_.
-* new method _discounted_total_ - returns new total cost of order after discounts
-* new method _items_of_type_ - this returns all items of a type from the order
-* changed method _output_ - now uses _discounted_cost_ and _discounted_cost_.
+* new var `discountList` - stores a  _discountList_
+* new method `add_discount` - adds a discount to the _discount_list_
+* new method `apply_discount` - this goes through each "delivery" to calculate _discounted_price_ and also the final _discounted_total_.
+* new method `discounted_total` - returns new total cost of order after discounts
+* new method `items_of_type` - this returns all items of a type from the order
+* changed method `output` - now uses _discounted_cost_ and _discounted_cost_.
 
-#### delivery
+### delivery
 
-* added _originalPrice_ - simply records what the base cost of an item was before discounts were applied.
-* added _resetPrice_ - resets the price of an item to it's default price
+* added `originalPrice` - simply records what the base cost of an item was before discounts were applied.
+* added `resetPrice` - resets the price of an item to it's default price
 
-#### usage
+## usage
 the described example scenarios have been set out in feature_spec.rb, additionally a discount was added to run.rb and the output impoved to reflect this.
 
 ### adding a discount to an order
   * create a order in the same way as before
   * to apply discounts to an order you have some options
-    * you can now call _add_discount_
+    * you can now call `add_discount` on your order
     * you can set the discount list on the order to an already existing one
-
+    * you could have even created the order with the discountlist as a parameter!
+    
 | Ways to Apply Discount | Ways to Target Discount | Conditions on Discount |
 |------------------------|-------------------------|------------------------|
 | :percentOff            | :onAll                  | :none                  |
@@ -64,11 +65,13 @@ the described example scenarios have been set out in feature_spec.rb, additional
 |                        |                         | :priceTotal            |
 
 an example of how to build a discount
-``site_discounts.add ({:amount =>    :changePrice,amountParam:   {amount: 5},
-                       :condition => :priceTotal ,conditionParam:{amount: 50}})``
+```ruby
+site_discounts.add ({:amount =>    :changePrice,amountParam:   {amount: 5},
+                     :condition => :priceTotal ,conditionParam:{amount: 50}})
+ ```
 this sets standard delivery costs to cost 5 as long as the order costs over 50.
 
-#### params for subclasses
+### params for subclasses
 * percentOff  - _amount_ - how much % to remove from the cost of the item
 * changePrice - _amount_ - what to change the price into
 * onAll - no params
@@ -79,14 +82,12 @@ this sets standard delivery costs to cost 5 as long as the order costs over 50.
 ### making an addition to the system
 decide what kind of new aspect you want to add and go to the appropriate file _discountAmounts_, _discountConditions_,_discountTargets_. extend the base class there and add the behaviour, then add your new class to the hash at the bottom of the file.
 
-#### thoughts
+## thoughts
 ### What i like about my solution
 It's super flexable, could very easily extend to add all kinds of other options to any of the aspects.
 ### What i don't like about my solution
 Building a discount means describing it in a lot of detail, Not obvious enough if something goes wrong
 ### improvements to make
-_discountAmounts_, _discountTargets_ and _discountConditions_ are all very similar, i'm sure there's a ducktype hiding in them.
-
 I'd like to go over when my subclasses are created to give them better errors and make them check if they are initialized incorrectly.
 
 I'd like to change the Items array of _order_ to contain a new class, would not change without a better understanding of what uses it though (outside of this small window/project)
