@@ -29,7 +29,7 @@ class Order
   end
 
   def total_cost
-    items.inject(0) { |memo, (_, delivery)| memo += delivery.originalPrice }
+    items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
   end
 
   def discounted_total_cost

@@ -41,12 +41,7 @@ while it was possible to just reuse the % off application for both examples requ
 * new method `apply_discount` - this goes through each "delivery" to calculate _discounted_price_ and also the final _discounted_total_.
 * new method `discounted_total` - returns new total cost of order after discounts
 * new method `items_of_type` - this returns all items of a type from the order
-* changed method `output` - now uses _discounted_cost_ and _discounted_cost_.
-
-### delivery
-
-* added `originalPrice` - simply records what the base cost of an item was before discounts were applied.
-* added `resetPrice` - resets the price of an item to it's default price
+* changed method `output` - now also shows discounted values.
 
 ## usage
 the described example scenarios have been set out in feature_spec.rb, additionally a discount was added to run.rb and the output impoved to reflect this.
@@ -57,7 +52,7 @@ the described example scenarios have been set out in feature_spec.rb, additional
     * you can now call `add_discount` on your order
     * you can set the discount list on the order to an already existing one
     * you could have even created the order with the discountlist as a parameter!
-    
+
 | Ways to Apply Discount | Ways to Target Discount | Conditions on Discount |
 |------------------------|-------------------------|------------------------|
 | :percentOff            | :onAll                  | :none                  |
@@ -93,3 +88,5 @@ I'd like to go over when my subclasses are created to give them better errors an
 I'd like to change the Items array of _order_ to contain a new class, would not change without a better understanding of what uses it though (outside of this small window/project)
 
 figure out a better name for the application aspect (applicator, calculator,method) nothing seems to fit in all contexts it's used
+
+Would like to change target so it returns a list of all items that match it, this would allow for more flexibiltiy in terms of implementing things like BOGOF.

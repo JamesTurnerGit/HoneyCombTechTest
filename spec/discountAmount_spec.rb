@@ -1,20 +1,25 @@
 require "./models/discountAmounts"
 describe DiscountAmounts do
-  subject (:delivery){double("delivery",price: 100, :price= =>nil,discountedPrice: 100)}
+  subject (:delivery){double("delivery",price: 100, :price= =>nil)}
+  before(:each) do
+    item = ["channel name", delivery, 100]
+  end
+
   describe "#get" do
     it "should change the price if told :changePrice" do
       amount = rand(5..100)
       discounter = DiscountAmounts.get(:changePrice,{amount: amount})
-      discounter.apply(["channel name", delivery, 100])
-      expect(delivery).to have_received(:price=).with(amount)
+      item = ["channel name", delivery, 100]
+      discounter.apply(item)
+      expect(item[2]).to eq amount
     end
 
     it "should reduce by a % if told :percentOff" do
       amount = 25
       discounter = DiscountAmounts.get(:percentOff,{amount: amount})
-      params = ["channel name", delivery, 100]
-      discounter.apply(params)
-      expect(params[2]).to eq 75
+      item = ["channel name", delivery, 100]
+      discounter.apply(item)
+      expect(item[2]).to eq 75
     end
 
     it "should error if given an unknown target type" do
