@@ -8,14 +8,16 @@ class DiscountList
 
   def apply_discounts order
     orderItems = order.items
-
     orderItems.each do |item|
       item[1].reset_price
+      item[2] = item[1].price
+
+      #p item[2]
     end
 
     items.each do |discount|
-      ObjectSpace.each_object(Delivery) do |item|
-        discount.try_apply(order,["thing",item])
+      orderItems.each do |item|
+        discount.try_apply(order,item)
       end
     end
   end

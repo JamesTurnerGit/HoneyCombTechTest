@@ -22,11 +22,10 @@ module DiscountAmounts
   class PercentOff < Discounter
     def apply item
       delivery = item[1]
-      price = delivery.discountedPrice
+      price = item[2]
       percentageOfOriginal = (100 - params[:amount])
       discountedPrice = price * percentageOfOriginal / 100
-      delivery.discountedPrice = discountedPrice
-      true
+      item[2] = discountedPrice
     end
     def to_s
       "#{params[:amount]}% off"
@@ -36,8 +35,8 @@ module DiscountAmounts
   class ChangePrice < Discounter
     def apply item
       delivery = item[1]
-      delivery.discountedPrice = params[:amount]
-      true
+      delivery.price = params[:amount]
+      item[2] = params[:amount]
     end
     def to_s
       "price changed to #{params[:amount]}"

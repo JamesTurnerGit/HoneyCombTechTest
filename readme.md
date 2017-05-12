@@ -11,7 +11,10 @@ besides intergrating into the old code, flexibility and expandability are what i
 
 I decided to make a discount out of various subclasses as each behaviour potentially needs different params. I spiked a version with Procs as they can ignore what they don't need, but decided they weren't flexible enough to add a nice to_s method or any other future extensions needed.
 
-When changing the delivery class there's a problem, Having the price fully mutable creates an issue where you might apply the same discount twice. Making the a new var to contain the discounted price means code elswhere needs to point to that instead or errors occur. Making the new var the one that is static seems to be the safest option. Ideally prices would not be stored in the item itself and instead be stored in a pricelist object.
+The final cost of an item is stored in the `order.items` array at the second index of each sub array. `[broadcaster,delivery,final_price]` ideally this subarray would be changed into a class, but since i was trying to preserve the original codebase as much as possible it was left as an array.
+
+while it was possible to just reuse the % off application for both examples requested, It seemed natural to add something to change the price to show the flexablity of my solution.
+
 ## Concepts
 
 * A discount has three components
@@ -42,31 +45,48 @@ When changing the delivery class there's a problem, Having the price fully mutab
 
 #### delivery
 
-* changed var _price_ - is now unchangable after initialisation of order
-* added _discountedPrice_ - added and is what will be shown in the output of _order_
+* added _originalPrice_ - simply records what the base cost of an item was before discounts were applied.
+* added _resetPrice_ - resets the price of an item to it's default price
 
 #### usage
-the described example scenarios have been set out in feature_spec.rb, additionally a discount was added to run.rb
+the described example scenarios have been set out in feature_spec.rb, additionally a discount was added to run.rb and the output impoved to reflect this.
+
 ### adding a discount to an order
   * create a order in the same way as before
   * to apply discounts to an order you have some options
-    * you can now call _add_discount_ (details later)
+    * you can now call _add_discount_
     * you can set the discount list on the order to an already existing one
 
 | Ways to Apply Discount | Ways to Target Discount | Conditions on Discount |
 |------------------------|-------------------------|------------------------|
 | :percentOff            | :onAll                  | :none                  |
-| :changePrice           | :byType                 | :typeTotal             |
+| :changePrice           | :type                   | :typeTotal             |
 |                        |                         | :priceTotal            |
 
+an example of how to build a discount
+``site_discounts.add ({:amount =>    :changePrice,amountParam:   {amount: 5},
+                       :condition => :priceTotal ,conditionParam:{amount: 50}})``
+this sets standard delivery costs to cost 5 as long as the order costs over 50.
+
+#### params for subclasses
+* percentOff  - _amount_ - how much % to remove from the cost of the item
+* changePrice - _amount_ - what to change the price into
+* onAll - no params
+* byType - _type_ - what type of items to trigger on
+* none - no params
+* typeTotal - _type_ - what type of items to count - _amount_ -how many items before condition is met.
+
 ### making an addition to the system
-decide what kind of new aspect you want to add and go to the appropriate file _discountAmounts_, _discountConditions_,_discountTargets_
+decide what kind of new aspect you want to add and go to the appropriate file _discountAmounts_, _discountConditions_,_discountTargets_. extend the base class there and add the behaviour, then add your new class to the hash at the bottom of the file.
 
 #### thoughts
 ### What i like about my solution
-It's super flexable, could very easily extend to add all kinds of other options to any of the aspects
+It's super flexable, could very easily extend to add all kinds of other options to any of the aspects.
 ### What i don't like about my solution
-Building a discount means describing it in a lot of detail
+Building a discount means describing it in a lot of detail, Not obvious enough if something goes wrong
 ### improvements to make
 _discountAmounts_, _discountTargets_ and _discountConditions_ are all very similar, i'm sure there's a ducktype hiding in them.
+
 I'd like to go over when my subclasses are created to give them better errors and make them check if they are initialized incorrectly.
+
+I'd like to change the Items array of _order_ to contain a new class, would not change without a better understanding of what uses it though (outside of this small window/project)

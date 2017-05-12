@@ -29,12 +29,12 @@ class Order
   end
 
   def total_cost
-    items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
+    items.inject(0) { |memo, (_, delivery)| memo += delivery.originalPrice }
   end
 
   def discounted_total_cost
     apply_discounts
-    items.inject(0) { |memo, (_, delivery)| memo += delivery.discountedPrice }
+    items.inject(0) { |memo, (_, delivery,discountedPrice)| memo += discountedPrice }
   end
 
   def output
@@ -49,12 +49,12 @@ class Order
       result << COLUMNS.map { |name, width| name.to_s.ljust(width) }.join(' | ')
       result << output_separator
 
-      items.each_with_index do |(broadcaster, delivery), index|
+      items.each_with_index do |(broadcaster, delivery,price), index|
         result << [
           broadcaster.name.ljust(COLUMNS[:broadcaster]),
           delivery.name.to_s.ljust(COLUMNS[:delivery]),
           ("$#{delivery.price}").ljust(COLUMNS[:price]),
-          ("$#{delivery.discountedPrice}").ljust(COLUMNS[:discounted_price])
+          ("$#{price}").ljust(COLUMNS[:discounted_price])
         ].join(' | ')
       end
 

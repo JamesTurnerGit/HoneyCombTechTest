@@ -36,16 +36,6 @@ describe Order do
     end
   end
 
-  describe '#discounted_total_cost' do
-    it 'returns discounted_total' do
-      subject.add "broadcaster_1", standard_delivery
-      subject.add "broadcaster_2", express_delivery
-      express_delivery.discountedPrice = 5
-      standard_delivery.discountedPrice = 10
-      expect(subject.discounted_total_cost).to eq(15)
-    end
-  end
-
   describe '#items_of_type' do
     it 'returns all items matching type' do
       subject.add "broadcaster_1", standard_delivery
