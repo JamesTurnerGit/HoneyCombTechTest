@@ -26,14 +26,14 @@ describe DiscountTargets do
   end
   describe "#to_s" do
     it "all" do
-    targetter = DiscountTargets.get(:all)
-    expectedString = "on all items"
-    expect(targetter.to_s).to eq expectedString
-  end
-  it "on item types" do
-    targetter = DiscountTargets.get(:type,{:type => :express})
-    expectedString = "on express deliveries"
-    expect(targetter.to_s).to eq expectedString
-  end
+      targetter = DiscountTargets.get(:all)
+      expectedString = "on all items"
+      expect(targetter.to_s).to eq expectedString
+    end
+    it "on item types" do
+      targetter = DiscountTargets.get(:type,{:type => :express})
+      expectedString = "on express deliveries"
+      expect(targetter.to_s).to eq expectedString
+    end
   end
 end
