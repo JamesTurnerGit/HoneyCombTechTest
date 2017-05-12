@@ -88,5 +88,3 @@ I'd like to go over when my subclasses are created to give them better errors an
 I'd like to change the Items array of _order_ to contain a new class, would not change without a better understanding of what uses it though (outside of this small window/project)
 
 figure out a better name for the application aspect (applicator, calculator,method) nothing seems to fit in all contexts it's used
-
-Consider making calculator only receieve the price
