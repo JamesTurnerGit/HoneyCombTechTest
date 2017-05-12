@@ -5,10 +5,12 @@ class Discount
     @condition = condition
   end
 
-  def try_apply order, delivery
-    return if !targetter.check(delivery)
+  def try_apply order
     return if !condition.check(order)
-    discounter.apply(delivery)
+    items = targetter.find(order.items)
+    items.each do |item|
+      discounter.apply(item)
+    end
   end
 
   def to_s

@@ -7,15 +7,12 @@ class DiscountList
   end
 
   def apply_discounts order
-    orderItems = order.items
-    orderItems.each do |item|
+    order.items.each do |item|
       item[2] = item[1].price
     end
 
     items.each do |discount|
-      orderItems.each do |item|
-        discount.try_apply(order,item)
-      end
+      discount.try_apply(order)
     end
   end
 

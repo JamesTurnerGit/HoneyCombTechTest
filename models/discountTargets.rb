@@ -12,8 +12,8 @@ module DiscountTargets
       @params = params
     end
 
-    def check delivery
-      true
+    def find items
+      items
     end
 
     def to_s
@@ -29,10 +29,10 @@ module DiscountTargets
   end
 
   class Type < Targetter
-    def check item
-      delivery = item[1]
-      delivery.name == params[:type]
+    def find items
+      items.select{|item| item[1].name == params[:type]}
     end
+
     def to_s
       "on #{params[:type]} deliveries"
     end

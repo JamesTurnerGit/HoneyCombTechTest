@@ -89,4 +89,4 @@ I'd like to change the Items array of _order_ to contain a new class, would not 
 
 figure out a better name for the application aspect (applicator, calculator,method) nothing seems to fit in all contexts it's used
 
-Would like to change target so it returns a list of all items that match it, this would allow for more flexibiltiy in terms of implementing things like BOGOF.
+Consider making calculator only receieve the price

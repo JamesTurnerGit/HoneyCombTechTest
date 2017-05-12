@@ -1,23 +1,20 @@
 require "./models/discountTargets"
 describe DiscountTargets do
-  let (:delivery){double("delivery")}
+  let (:items){[]}
   describe "#get" do
-    it "should allways pass if told :all condition" do
+    it "should return full list if told :all condition" do
       targetter = DiscountTargets.get(:all)
-
-      expect(targetter.check(delivery)).to eq true
-
+      expect(targetter.find(items)).to eq items
     end
 
     it "should only target items of one type if told :type" do
       item_1 = double("express",:name => :express)
       item_2 = double("normal",:name => :normal)
+
       targetter = DiscountTargets.get(:type,{:type => :express})
 
-      expect(targetter.check(["broadcaster", item_1])).to eq true
-      expect(targetter.check(["broadcaster", item_2])).to eq false
-
-
+      expect(targetter.find([["broadcaster", item_1]]).count).to eq 1
+      expect(targetter.find([["broadcaster", item_2]]).count).to eq 0
     end
 
     it "should error if given an unknown target type" do
