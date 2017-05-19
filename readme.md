@@ -88,3 +88,12 @@ I'd like to go over when my subclasses are created to give them better errors an
 I'd like to change the Items array of _order_ to contain a new class, would not change without a better understanding of what uses it though (outside of this small window/project)
 
 figure out a better name for the application aspect (applicator, calculator,method) nothing seems to fit in all contexts it's used
+
+## further thoughts post-interview
+During the interview I was asked to expand the code in a way I didn't forsee(adding multible conditions to a discount) under interview conditions it was a bit harder to think my way through fixing it, but the changes were still made.
+
+Unfortunatly becaue of the delays a lot of Tests have not yet been written, the only real tests are the final feature test and the dateRange condition, which needs to be expanded to return false when expected.
+
+This led to an interesting discussion on which solution is better- the quick and easy one of writing two classes to pass the original requirements, or a more complex system like the one created here. Out of that I got reccomend a new sandi metz book which i'm starting to work my way through!
+
+Hopefully soon, because i've got a lot of learning in the next few days, i'll be able to write up more tests to cover the entirety of the new code.
