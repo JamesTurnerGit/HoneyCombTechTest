@@ -32,6 +32,15 @@ describe DiscountConditions do
     it "should raise if it doesn't understand the condition type" do
       expect{DiscountConditions.itself.get(:fake)}.to raise_error "condition matcher not found"
     end
+
+    it "should check date condition" do
+      condition = DiscountConditions.get(:dateRange, {startDate: Date.new(2017,5,1),
+                                                        endDate: Date.new(2017,5,31)})
+      allow(order).to receive(:timeStamp).and_return (Date.new(2017,5,18))
+
+      expect(condition.check(order)).to eq true
+    end
+
   end
 
   describe "#to_s" do
@@ -52,5 +61,6 @@ describe DiscountConditions do
       expectedString = "if there is at least 3 express deliveries in the order"
       expect(condition.to_s).to eq expectedString
     end
+
   end
 end

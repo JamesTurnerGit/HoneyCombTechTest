@@ -1,4 +1,5 @@
 require_relative "discountList"
+require "date"
 
 class Order
   COLUMNS = {
@@ -9,11 +10,13 @@ class Order
   }.freeze
 
   attr_accessor :material, :items, :discountList
+  attr_reader :timeStamp
 
-  def initialize(material,discountList = DiscountList.new)
+  def initialize(material,discountList = DiscountList.new, timeStamp = Date.today)
     self.material = material
     self.items = []
     self.discountList = discountList
+    @timeStamp = timeStamp
   end
 
   def add(broadcaster, delivery)

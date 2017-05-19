@@ -10,6 +10,7 @@ module DiscountConditions
   class Condition
     def initialize params
       @params = params
+
     end
     def check order
       true
@@ -47,5 +48,12 @@ module DiscountConditions
     end
   end
 
-  CONDITIONS = {:none => None, :priceTotal => PriceTotal, :typeTotal => TypeTotal}.freeze
+  class DateRange < Condition
+    def check order
+      order.timeStamp >= params[:startDate] &&
+        order.timeStamp <= params[:endDate]
+    end
+  end
+
+  CONDITIONS = {:none => None, :priceTotal => PriceTotal, :typeTotal => TypeTotal, :dateRange => DateRange}.freeze
 end

@@ -11,7 +11,7 @@ describe DiscountFactory do
                                                  conditions: conditions})}
   let(:discountParams){{amount: "amount", amountParam: "amountParam",
                         target: "target", targetParam: "targetParam",
-                        condition: "condition", conditionParam: "conditionParam"}}
+                        conditions:[{condition: "condition", conditionParam: "conditionParam"}]}}
   describe "#make" do
     it "searches the right modules for the right parts" do
       discountFactory.make discountParams
@@ -23,7 +23,8 @@ describe DiscountFactory do
       discountFactory.make discountParams
       expect(discount).to have_received(:new).with({discounter:"amountClass",
                                                     targetter: "targetClass",
-                                                    condition: "conditionClass"})
+                                                    conditions: ["conditionClass"]})
     end
+    ##TODO write a nice test for multi conditions
   end
 end

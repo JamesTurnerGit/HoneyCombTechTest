@@ -18,9 +18,9 @@ describe "Examples" do
   before(:each) do
     site_discounts.add ({:amount => :changePrice,  amountParam: {amount: 15.0},
                          :target => :type,         targetParam: {:type => :express},
-                         :condition => :typeTotal, conditionParam: {amount: 2, :type => :express}})
+                         conditions: [{:condition => :typeTotal, conditionParam: {amount: 2, :type => :express}}]})
     site_discounts.add ({:amount => :percentOff,   amountParam: {amount:10},
-                         :condition => :priceTotal,conditionParam: {amount: 30}})
+                         conditions: [{:condition => :priceTotal,conditionParam: {amount: 30}}]})
   end
 
   it "calculates example1 as expected" do
@@ -43,5 +43,18 @@ describe "Examples" do
     order.add broadcaster_3, express_delivery
 
     expect(order.discounted_total_cost).to eq 40.5
+  end
+  it "calculates new example" do
+    material = Material.new('ZDW/EOWW005/010')
+    order = Order.new(material,DiscountList.new, Date.new(2017,7,5))
+    order.add_discount(:amount => :percentOff,  amountParam: {amount: 20.0},
+                       conditions: [{:condition => :priceTotal, conditionParam: {amount: 30}},
+                                    {:condition => :dateRange, conditionParam: {startDate: Date.new(2017,7,1), endDate: Date.new(2017,7,31)}}])
+    order.add broadcaster_1, express_delivery
+    order.add broadcaster_2, express_delivery
+    order.add broadcaster_3, express_delivery
+
+    expect(order.discounted_total_cost).to eq 48
+
   end
 end

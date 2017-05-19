@@ -5,7 +5,9 @@ describe Discount do
   let(:targetter) {double("Target", find: [])}
   let(:condition) {double("condition", check: true)}
 
-  let(:params) {{discounter: amount, targetter: targetter, condition: condition}}
+  let(:params) {{discounter: amount,
+                 targetter: targetter,
+                 conditions: [condition]}}
 
   subject(:discount) {Discount.new params}
 
@@ -39,6 +41,12 @@ describe Discount do
       allow(condition).to receive(:to_s).and_return ("3")
       expectedString = "1 2 3."
       expect(discount.to_s).to eq expectedString
+    end
+  end
+
+  describe "#multible conditions" do
+    it "can accept multible conditions" do
+
     end
   end
 end

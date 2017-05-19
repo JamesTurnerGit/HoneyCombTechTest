@@ -38,7 +38,7 @@ while it was possible to just reuse the % off application for both examples requ
 
 * new var `discountList` - stores a  _discountList_
 * new method `add_discount` - adds a discount to the _discount_list_
-* new method `apply_discount` - this goes through each "delivery" to calculate _discounted_price_ and also the final _discounted_total_.
+* new method `apply_discount` - this goes through each "delivery" to calculate new prices on each item.
 * new method `discounted_total` - returns new total cost of order after discounts
 * new method `items_of_type` - this returns all items of a type from the order
 * changed method `output` - now also shows discounted values.

@@ -6,17 +6,20 @@ require_relative "discountConditions"
 class DiscountFactory
   def initialize params = {}
     params = defaults.merge(params)
-    @discount = params[:discount]
-    @amounts = params[:amounts]
-    @targets = params[:targets]
-    @conditions = params [:conditions]
+    @discount_class = params[:discount]
+    @amounts_list = params[:amounts]
+    @targets_list = params[:targets]
+    @conditions_list = params [:conditions]
   end
 
   def make params
-    discounter = amounts.get(params[:amount], params[:amountParam])
-    targetter  = targets.get(params[:target], params[:targetParam])
-    condition  = conditions.get(params[:condition], params[:conditionParam])
-    discount.new ({discounter: discounter, targetter: targetter, condition: condition})
+    discounter = amounts_list.get(params[:amount], params[:amountParam])
+    targetter  = targets_list.get(params[:target], params[:targetParam])
+    conditions = []
+    params[:conditions].each do |config|
+      conditions << conditions_list.get(config[:condition], config[:conditionParam])
+    end
+    discount_class.new ({discounter: discounter, targetter: targetter, conditions: conditions})
   end
 
   private
@@ -26,5 +29,5 @@ class DiscountFactory
      targets: DiscountTargets,
      conditions: DiscountConditions}
   end
-  attr_reader :discount, :amounts, :targets, :conditions
+  attr_reader :discount_class, :amounts_list, :targets_list, :conditions_list
 end
